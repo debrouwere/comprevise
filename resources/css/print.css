@@ -1,0 +1,18 @@
+#concept{
+background: none;
+display: block;
+float: left;
+margin: 0;
+position: absolute;
+
+top: 0px;
+width: 100%;
+}
+
+#concept img{
+width: 100%;
+}
+
+ul#header-bar{
+display: none;
+}

@@ -1,0 +1,244 @@
+/* LIGHT THEME */
+
+/**************************
+****DASHBOARD INTERFACE****
+**************************/
+
+* {
+border:0;
+font-size:100%;
+margin:0;
+padding:0
+}
+
+body {
+background:#fff;
+font-family:"HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+overflow-x:hidden
+}
+
+#wrapper {
+margin:auto;
+width:460px
+}
+
+h1 {
+color:#222;
+font-size:42px;
+font-weight:100;
+line-height:40px;
+margin-top:60px
+}
+
+h2 {
+border-bottom:1px solid #eee;
+color:#555;
+float:left;
+font-size:32px;
+font-weight:100;
+line-height:30px;
+margin:35px 0 20px;
+padding-bottom:30px;
+width:460px
+}
+
+h3 {
+clear:left;
+float:left;
+margin-bottom:5px;
+width:100%
+}
+
+h3#no-categories {
+margin-top:40px
+}
+
+h3 a {
+clear:both;
+color:#999;
+font-family:"HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size:18px;
+font-weight:300;
+line-height:30px;
+text-decoration:none
+}
+
+h3 a:hover {
+border-bottom:1px solid #ddd;
+color:#777
+}
+
+h3 a em {
+color:#666;
+font-family:"HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-style:normal;
+font-weight:400;
+text-transform: capitalize;
+}
+
+p {
+border-bottom:1px solid #eee;
+color:#777;
+font-size:13px;
+line-height:20px;
+margin:20px -1000px;
+padding:0 1000px 30px
+}
+
+p a{
+font-family:"HelveticaNeue-Bold", "Helvetica Neue Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+text-decoration:none;
+border-bottom:1px solid #ccc;
+color:#888
+}
+p a:hover{
+font-family:"HelveticaNeue-Bold", "Helvetica Neue Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+text-decoration:none;
+border-bottom:1px solid #aaa;
+color:#666
+}
+
+ul {
+clear:left;
+float:left;
+margin-bottom:10px;
+width:100%
+}
+
+li {
+float:left;
+list-style-type:none;
+margin-bottom:10px;
+margin-right:10px
+}
+
+li a, ul#header-bar li.disabled a:hover {
+-moz-border-radius:7px;
+-webkit-border-radius:7px;
+border:1px solid #eee;
+border-radius:7px;
+color:#999;
+cursor:pointer;
+display:inline-block;
+font:14px;
+font-family:"HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+line-height:13px;
+outline:none;
+padding:6px 9px 8px;
+text-align:center;
+text-decoration:none
+}
+
+li a:hover {
+background:#fafafa;
+border:1px solid #ddd;
+text-decoration:none
+}
+
+li a:active {
+position:relative;
+top:1px
+}
+
+li.latest a {
+background:#f8f8f8;
+border:1px solid #e5e5e5;
+text-decoration:none
+}
+
+li.latest a:hover {
+background:#eee;
+border:1px solid #ccc;
+text-decoration:none
+}
+
+#footer {
+border-top:1px solid #eee;
+clear:left;
+color:#ddd;
+display:block;
+float:left;
+font-family:"HelveticaNeue-Regular", "Helvetica Neue Regular", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size:14px;
+line-height:10px;
+margin-top:40px;
+padding:30px 0;
+text-align:right;
+width:460px
+}
+
+#footer a {
+color:#ccc;
+font-family:"HelveticaNeue-Bold", "Helvetica Neue Bold", "Helvetica Neue", Helvetica, Arial, sans-serif;
+text-decoration:none
+}
+
+#footer a:hover {
+border-bottom:1px solid #eee;
+color:#bbb
+}
+
+
+
+
+/**************************
+****** CONCEPT VIEW *******
+**************************/
+
+body#conceptview{
+background: #fff;
+}
+
+/* REMOVE THE 'X' BEFORE 'background-position' TO HAVE YOUR CONCEPTS ALIGN LEFT */
+
+#concept{
+Xbackground-position: left top;
+display: block;
+float: left;
+margin: 0;
+position: absolute;
+text-indent: -99999px;
+top: 50px;
+width: 100%;
+}
+
+ul#header-bar{
+background: #616161;
+background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+background: -moz-linear-gradient(top,  #fff,  #ededed);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ededed');
+font-size: 14px;
+height: 30px;
+margin: 0;
+padding: 10px;
+position: fixed;
+text-align: center;
+top: 0; left: 0; right: 0;
+-moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+ul#header-bar li {
+display: inline;
+float: none;
+}
+
+ul#header-bar li a {
+border-color: #ddd;
+}
+
+ul#header-bar li.disabled a, ul#header-bar li.disabled a:hover, ul#header-bar li.disabled a:active{
+cursor: default;
+filter: alpha(opacity=20);
+opacity:0.2;
+top:0;
+}
+
+/* REMOVE THE 'X' BEFORE 'display' AND 'top' TO REMOVE THE NAVIGATION BAR ABOVE CONCEPTS */
+
+ul#header-bar{
+Xdisplay: none;}
+#concept{
+Xtop:0;}

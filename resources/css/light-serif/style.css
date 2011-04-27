@@ -1,0 +1,239 @@
+/* LIGHT SERIF THEME */
+
+/**************************
+****DASHBOARD INTERFACE****
+**************************/
+
+* {
+border:0;
+font-size:100%;
+margin:0;
+padding:0;
+
+}
+
+body {
+font-family: Baskerville, Garamond, Palatino, "Palatino Linotype", "Hoefler Text", "Times New Roman", serif;
+background: #fff;
+overflow-x: hidden;
+}
+
+#wrapper {
+margin:auto;
+width:460px;
+}
+
+h1 {
+font-size:42px;
+line-height:40px;
+margin-top:60px;
+font-weight: normal;
+font-weight: 100;
+color: #222;
+}
+
+h2 {
+float:left;
+font-size:32px;
+line-height:30px;
+margin:35px 0 20px;
+padding-bottom:30px;
+width:460px;
+color: #555;
+font-weight: 100;
+border-bottom: 1px solid #eee;
+}
+
+h3{
+clear:left;
+float:left;
+width: 100%;
+margin-bottom: 5px;
+}
+
+h3#no-categories {
+margin-top:40px;
+}
+
+h3 a {
+clear:both;
+color:#999;
+line-height:30px;
+text-decoration:none;
+font-weight: 300;
+font-size: 19px;
+}
+
+h3 a:hover {
+border-bottom:1px solid #ddd;
+color:#777;
+}
+
+h3 a em {
+color:#666;
+font-weight:400;
+font-style: normal;
+text-transform: capitalize;
+}
+
+p {
+color:#777;
+font-size:15px;
+line-height:20px;
+border-bottom: 1px solid #eee;
+margin: 20px -1000px 20px -1000px;
+padding: 0 1000px 30px 1000px;
+}
+
+p a{ 
+color:#666;
+font-weight: bold;
+text-decoration:none
+}
+
+p a:hover {
+border-bottom:1px solid #ddd;
+color:#555;
+}
+
+ul{
+clear:left;
+float:left;
+width: 100%;
+margin-bottom: 10px;
+}
+
+li {
+float:left;
+list-style-type:none;
+margin-bottom:10px;
+margin-right:10px;
+}
+
+li a, ul#header-bar li.disabled a:hover {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	font: 14px;
+	padding: 6px 9px 8px;
+	-webkit-border-radius: 7px;
+	-moz-border-radius: 7px;
+	border-radius: 7px;
+	border: 1px solid #eee;
+	color: #999;
+	line-height: 13px;
+	
+}
+li a:hover {
+	text-decoration: none;
+	background: #fafafa;
+	border: 1px solid #ddd;
+}
+
+li a:active {
+	position: relative;
+	top: 1px;
+}
+
+li.latest a{
+	text-decoration: none;
+	background: #f8f8f8;
+	border: 1px solid #e5e5e5;
+}
+
+li.latest a:hover{
+	text-decoration: none;
+	background: #eee;
+	border: 1px solid #ccc;
+}
+
+#footer {
+border-top: 1px solid #eee;
+clear:left;
+color:#ddd;
+display:block;
+float:left;
+font-size:14px;
+line-height:10px;
+margin-top:40px;
+padding:30px 0;
+text-align:right;
+width:460px;
+}
+
+#footer a {
+color:#ccc;
+text-decoration:none;
+}
+
+#footer a:hover {
+border-bottom:1px solid #eee;
+color:#bbb;
+}
+
+
+
+
+/**************************
+****** CONCEPT VIEW *******
+**************************/
+
+body#conceptview{
+background: #fff;
+}
+
+/* REMOVE THE 'X' BEFORE 'background-position' TO HAVE YOUR CONCEPTS ALIGN LEFT */
+
+#concept{
+Xbackground-position: left top;
+display: block;
+float: left;
+margin: 0;
+position: absolute;
+text-indent: -99999px;
+top: 50px;
+width: 100%;
+}
+
+ul#header-bar{
+background: #616161;
+background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+background: -moz-linear-gradient(top,  #fff,  #ededed);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff', endColorstr='#ededed');
+font-size: 14px;
+height: 30px;
+margin: 0;
+padding: 10px;
+position: fixed;
+text-align: center;
+top: 0; left: 0; right: 0;
+-moz-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+-webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+z-index: 1;
+}
+
+ul#header-bar li {
+display: inline;
+float: none;
+}
+
+ul#header-bar li a {
+border-color: #ddd;
+}
+
+ul#header-bar li.disabled a, ul#header-bar li.disabled a:hover, ul#header-bar li.disabled a:active{
+cursor: default;
+filter: alpha(opacity=20);
+opacity:0.2;
+top:0;
+}
+
+/* REMOVE THE 'X' BEFORE 'display' AND 'top' TO REMOVE THE NAVIGATION BAR ABOVE CONCEPTS */
+
+ul#header-bar{
+Xdisplay: none;}
+#concept{
+Xtop:0;}
