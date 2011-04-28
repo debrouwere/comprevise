@@ -1,8 +1,3 @@
-# Protect files and directories from prying eyes.
-<FilesMatch "resources/(.+)\.php">
-  Order allow,deny
-</FilesMatch>
-
 Options -Indexes
 Options +FollowSymLinks
 ErrorDocument 404 resources/index.php

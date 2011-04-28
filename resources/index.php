@@ -2,14 +2,17 @@
 
 /* import requirements */
 
-require('./routing.php');
-require('./settings.php');
-require('./data.php');
+require('../settings.php');
+require('./request.php');
+require('./models.php');
+require('./controllers.php');
 require('./vendors/Smarty/libs/Smarty.class.php');
 
 /* initialization */
 
 $smarty = new Smarty;
+$smarty->assign("BASE_URL", CR_BASE_URL);
+$smarty->assign("THEME", CR_THEME);
 $license = new License(CR_CODE, CR_EMAIL);
 
 /* set debug mode */
@@ -20,29 +23,12 @@ if (CR_DEBUG) {
     ini_set('display_errors', '1');
 }
 
-/* views */
-
-function concept($tpl) {
-
-}
-
-function category($tpl) {
-
-}
-
-function client($tpl) {
-    $clients = Client::search("../clients");
-    $client = $clients[0];
-
-    $tpl->assign("BASE_URL", CR_BASE_URL);
-    $tpl->assign("page_title", "Concepts for " . $client->name);
-    $tpl->assign("folders", $client->categories);
-    $tpl->display('./templates/index.tpl');
-}
+/* routing */
 
 if ($license->is_verified()) {
-    $tpl->display('./templates/license.tpl');
+    license($smarty);
 } else {
-    // minimalistic view routing
+    // minimalistic routing to functions 
+    // in controllers.php
     call_user_func($requested_view, $smarty);
 }

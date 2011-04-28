@@ -25,6 +25,10 @@ class Folder {
         $this->humanize_name();
     }
     
+    public function exists() {
+        return file_exists($this->path);
+    }
+    
     public function humanize_name() {
         $folder = array_pop(explode('/', $this->path));
         $this->machine_name = $folder;
@@ -34,11 +38,10 @@ class Folder {
     public function get_absolute_url() {
         global $clean_urls;
         
-        $path = CR_BASE_URL . $this->get_url_path();
         if ($clean_urls) {
-            return $path;
+            return CR_BASE_URL . $this->get_url_path();
         } else {
-            return "/?q=" . $path;
+            return "?q=" . $this->get_url_path();
         }
     }
 
@@ -50,16 +53,26 @@ class Folder {
 class Client extends Folder {
     public function __construct($path) {
         parent::__construct($path);
+        // concepts can belong to categories, but can also
+        // be freestanding
         $this->categories = Category::search($path, $this);
+        $this->concepts = Concept::search($path, $this);
         $this->sort();
     }
     
     public static function search($base) {
         return search($base, 'Client');
     }
+    
+    public static function reverse($request) {
+        $client_path = "../clients/" . $request["client"];
+        $client = new Client($client_path);
+        return $client;
+    }
 
     public function sort() {
         usort($this->categories, array('Folder', 'cmp'));
+        usort($this->concepts, array('Folder', 'cmp'));
     }
     
     public function get_url_path() {
@@ -77,6 +90,13 @@ class Category extends Folder {
     
     public static function search($base, $parent) {
         return search($base, 'Category', $parent);
+    }
+
+    public static function reverse($request) {
+        $client = Client::reverse($request);
+        $category_path = $client->path . "/" . $request["category"];
+        $category = new Category($category_path, $client);
+        return $category;
     }
 
     public function sort() {
@@ -104,6 +124,13 @@ class Concept extends Folder {
         return $images;
     }
     
+    public static function reverse($request) {   
+        $category = Category::reverse($request);
+        $concept_path = $category->path . "/" . $request["concept"];
+        $concept = new Concept($category_path, $category);
+        return $concept;
+    }
+    
     public function __construct($path, $category) {
         parent::__construct($path);
         $this->category = $category;
@@ -125,12 +152,13 @@ class License {
     public function __construct($code, $email) {
         $this->code = $code;
         $this->email = $email;
-        $this->domain = str_replace('www.','',$_SERVER['SERVER_NAME']);
+        $this->domain = str_replace('www.', '', $_SERVER['SERVER_NAME']);
     }
     
     public function is_verified() {
         $salt = substr($this->email, 0, 4) . 'w3qwe' . substr($this->domain, -4);
         $code = sha1($this->email . $salt . $this->domain);
+        
         if (CR_CODE == $code) {
             return true;
         } else {
