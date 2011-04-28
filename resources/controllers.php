@@ -1,7 +1,17 @@
 <?php
 
 function concept($tpl) {
-    $tpl->display('./templates/concept.tpl');
+    global $request;
+
+    $current = Concept::reverse($request);
+    $concepts = new Paginator($current->category->concepts);
+
+    // initialize paginator
+    $location = array_search($current, $concepts->list);
+    $concepts->current($location);
+
+    $tpl->assign("concepts", $concepts);
+    return $tpl->fetch('./templates/concept.tpl');
 }
 
 function category($tpl) {
@@ -12,7 +22,7 @@ function category($tpl) {
     $tpl->assign("category", $category);    
     $tpl->assign("client", $category->client);
     $tpl->assign("concepts", $category->concepts);
-    $tpl->display('./templates/category.tpl');
+    return $tpl->fetch('./templates/category.tpl');
 }
 
 function client($tpl) {
@@ -22,9 +32,9 @@ function client($tpl) {
     $tpl->assign("client", $client);
     $tpl->assign("folders", $client->categories);
     $tpl->assign("concepts", $client->concepts);
-    $tpl->display('./templates/client.tpl');
+    return $tpl->fetch('./templates/client.tpl');
 }
 
 function license($tpl) {
-    $tpl->display('./templates/license.tpl');
+    return $tpl->fetch('./templates/license.tpl');
 }

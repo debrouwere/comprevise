@@ -15,7 +15,7 @@ define('CR_CODE', 'INSERT CODE HERE');
 // Your email address.
 define('CR_EMAIL', 'INSERT EMAIL HERE');
 // You can turn debugging to troubleshoot the app
-define('CR_DEBUG', false);
+define('CR_DEBUG', true);
 // If Concept Revisions doesn't live at the domain root, add in 
 // the subdirectory. For example, if the app is available at 
 // http://yourdomain.com/concepts, specify '/concepts' as the 

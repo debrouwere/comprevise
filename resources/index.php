@@ -4,6 +4,7 @@
 
 require('../settings.php');
 require('./request.php');
+require('./utils.php');
 require('./models.php');
 require('./controllers.php');
 require('./vendors/Smarty/libs/Smarty.class.php');
@@ -25,10 +26,13 @@ if (CR_DEBUG) {
 
 /* routing */
 
+// if (!$license->is_verified()) { // reverse verification for testing
 if ($license->is_verified()) {
-    license($smarty);
+    $output = license($smarty);
 } else {
     // minimalistic routing to functions 
     // in controllers.php
-    call_user_func($requested_view, $smarty);
+    $output = call_user_func($requested_view, $smarty);
 }
+
+print $output;

@@ -17,6 +17,7 @@ function search($base, $cls, $parent = NULL) {
     return $directories;
 }
 
+
 class Folder {    
     public function __construct($path) {
         $this->path = $path;
@@ -50,13 +51,16 @@ class Folder {
     }
 }
 
+
 class Client extends Folder {
     public function __construct($path) {
         parent::__construct($path);
         // concepts can belong to categories, but can also
         // be freestanding
         $this->categories = Category::search($path, $this);
-        $this->concepts = Concept::search($path, $this);
+        $undefined = new Category($this->path, $this);
+        $undefined->machine_name = $undefined->name = "uncategorized";
+        $this->concepts = Concept::search($path, $undefined);
         $this->sort();
     }
     
@@ -80,8 +84,9 @@ class Client extends Folder {
     }
 }
 
+
 class Category extends Folder {
-    public function __construct($path, $client) {
+    public function __construct($path, $client) {   
         parent::__construct($path);
         $this->client = $client;
         $this->concepts = Concept::search($path, $this);
@@ -94,9 +99,12 @@ class Category extends Folder {
 
     public static function reverse($request) {
         $client = Client::reverse($request);
-        $category_path = $client->path . "/" . $request["category"];
-        $category = new Category($category_path, $client);
-        return $category;
+        if ($request["category"] == "uncategorized") {
+            return $client; 
+        } else {
+            $category_path = $client->path . "/" . $request["category"]; 
+            return new Category($category_path, $client);
+        }    
     }
 
     public function sort() {
@@ -108,8 +116,9 @@ class Category extends Folder {
     }
 }
 
+
 class Concept extends Folder {
-    public static function search($base, $category) {
+    public static function search($base, $category) {    
         $garbage = array('.', '..', '.DS_Store', 'Thumbs.db');
         $types = array('png','jpeg','jpg','gif');    
 
@@ -127,7 +136,9 @@ class Concept extends Folder {
     public static function reverse($request) {   
         $category = Category::reverse($request);
         $concept_path = $category->path . "/" . $request["concept"];
-        $concept = new Concept($category_path, $category);
+        // search for extension
+        $concept_path = array_shift(glob($concept_path . "*"));
+        $concept = new Concept($concept_path, $category);
         return $concept;
     }
     
@@ -137,32 +148,24 @@ class Concept extends Folder {
     }
     
     public function humanize_name () {
-        $info = pathinfo($this->path); 
-        $name =  basename($this->path, '.' . $info['extension']);
+        $info = pathinfo($this->path);
+        $this->filename = basename($this->path);
+        $name = basename($this->path, '.' . $info['extension']);
         $this->machine_name = $name;
         $this->name = str_replace(array('_', '-'), ' ', $name);        
     }
     
     public function get_url_path() {
-        return $this->category->get_url_path() . $this->name . "/";
-    }
-}
-
-class License {
-    public function __construct($code, $email) {
-        $this->code = $code;
-        $this->email = $email;
-        $this->domain = str_replace('www.', '', $_SERVER['SERVER_NAME']);
+        return $this->category->get_url_path() . $this->machine_name . "/";
     }
     
-    public function is_verified() {
-        $salt = substr($this->email, 0, 4) . 'w3qwe' . substr($this->domain, -4);
-        $code = sha1($this->email . $salt . $this->domain);
-        
-        if (CR_CODE == $code) {
-            return true;
+    public function get_image_url() {
+        if ($this->category->name == "uncategorized") {
+            $url_path = $this->category->client->get_url_path();
         } else {
-            return false;
+            $url_path = $this->category->get_url_path();
         }
+    
+        return CR_BASE_URL . "/clients" . $url_path . $this->filename;
     }
 }

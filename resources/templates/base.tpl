@@ -5,10 +5,8 @@
         <meta content="charset" value="utf-8" />
         <link rel="stylesheet" type="text/css" href="{$BASE_URL}/resources/css/{$THEME}/style.css">
         <link rel="stylesheet" type="text/css" media="print" href="{$BASE_URL}/resources/css/print.css" />
-        <style type="text/css">
-        #concept { 
-            /*background: url('{$BASE_URL}/background.png') center top no-repeat;*/
-        }
+        {block "head"}
+        {/block}
         </style>
     </head>
     <body>
