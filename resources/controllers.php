@@ -4,7 +4,12 @@ function concept($tpl) {
     global $request;
 
     $current = Concept::reverse($request);
-    $concepts = new Paginator($current->category->concepts);
+    
+    if (get_class($current->category) == "Category") {
+        $concepts = new Paginator($current->category->concepts);
+    } else {
+        $concepts = new Paginator(array($current));
+    }
 
     // initialize paginator
     $location = array_search($current, $concepts->list);

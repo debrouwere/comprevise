@@ -18,7 +18,7 @@
         {if $concepts->current()->category->name == "uncategorized"}
         <a href="{$concepts->current()->category->client->get_absolute_url()}">Back to Project Dashboard</a>
         {else}
-        <a href="{$concepts->current()->category->get_absolute_url()}">Back to Project Dashboard</a>
+        <a href="{$concepts->current()->category->get_absolute_url()}">Back to {$concepts->current()->category->name} overview</a>
         {/if}
     </li>
     <li{if $concepts->is_last()} class="disabled"{/if}>

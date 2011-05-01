@@ -2,7 +2,14 @@
 {block "title"}Concepts under {$category->name}{/block}
 {block "main"}
 <div id="wrapper">
-    <h1>{$category->name}</h1>
+    <ul id="header-bar">
+        <li>
+            <a href="{$category->client->get_absolute_url()}">Back to Project Dashboard</a>
+        </li>
+    </ul>
+
+    <h1 style="margin-top: 80px;">{$category->name}</h1>
+
     <p class="description">This category listing will automatically update as new concepts and revisions are uploaded.</p>
     
     {foreach $concepts as $concept}
