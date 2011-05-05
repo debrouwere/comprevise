@@ -14,9 +14,9 @@ $.fn.appear = function (appear) {
 
 function fade_header () {
     $(document).bind('mousemove', function(e){
-        if (e.pageY <= 100) {
+        if (e.pageY - $("body").scrollTop() <= 100) {
             $("#header-bar").appear();
-        } else if (e.pageY > 100) {
+        } else {
             $("#header-bar").appear(false);        
         }
     });
