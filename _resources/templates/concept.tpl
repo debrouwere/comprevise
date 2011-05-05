@@ -25,18 +25,11 @@
        <a {if $concepts->next()}href="{$concepts->next()->get_absolute_url()}"{/if}>Next Concept &rarr;</a>
     </li>
     <li>
-        <a href="#" onclick="hidenav()" style="position: absolute; top: 10px; right: 30px;">X</a>
+        <a id="close" href="#" style="position: absolute; top: 10px; right: 30px;">X</a>
     </li>
 </ul>
 
 <div id="concept">
     <img src="{$concepts->current()->get_image_url()}" />
 </div>
-
-<script language="javascript">
-function hidenav() {
-    document.getElementById('header-bar').style.display = "none";
-    document.getElementById('concept').style.top = (0)+'px';
-}
-</script>
 {/block}

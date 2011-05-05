@@ -1,8 +1,10 @@
 <?php
 
-function concept($tpl) {
-    global $request;
+function get_concept_path($concept) {
+    return $concept->path;
+}
 
+function concept($request, $tpl) {
     $current = Concept::reverse($request);
     
     if (get_class($current->category) == "Category") {
@@ -11,18 +13,27 @@ function concept($tpl) {
         $concepts = new Paginator(array($current));
     }
 
-    // initialize paginator
-    $location = array_search($current, $concepts->list);
-    $concepts->current($location);
+    // initialize paginator, setting the paginator to the
+    // current object using its path as a guide
+    $concepts->current($current, "get_concept_path");
 
     $tpl->assign("concepts", $concepts);
     return $tpl->fetch('./templates/concept.tpl');
 }
 
-function category($tpl) {
-    global $request;
-
+function category($request, $tpl) {
     $category = Category::reverse($request);
+    
+    // if this category doesn't exist, we might be
+    // searching for an uncategorized concept instead
+    if (!$category->exists) {
+        $params = array(
+            "client" => $request["client"], 
+            "category" => "uncategorized",
+            "concept" => $request["category"]
+            );
+        return concept($params, $tpl);
+    }
     
     $tpl->assign("category", $category);    
     $tpl->assign("client", $category->client);
@@ -30,7 +41,7 @@ function category($tpl) {
     return $tpl->fetch('./templates/category.tpl');
 }
 
-function client($tpl) {
+function client($request, $tpl) {
     $clients = Client::search("../clients");
     $client = $clients[0];
 
@@ -40,6 +51,6 @@ function client($tpl) {
     return $tpl->fetch('./templates/client.tpl');
 }
 
-function license($tpl) {
+function license($request, $tpl) {
     return $tpl->fetch('./templates/license.tpl');
 }

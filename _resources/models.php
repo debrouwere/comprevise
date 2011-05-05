@@ -6,6 +6,8 @@
 // particular because static methods don't have access to 
 // the leaf class that's calling them.
 function search($base, $cls, $parent = NULL) {
+    if (!file_exists($base)) return array();
+
     $files = scandir($base);
     $directories = array();
     foreach ($files as $file) {
@@ -21,13 +23,14 @@ function search($base, $cls, $parent = NULL) {
 class Folder {    
     public function __construct($path) {
         $this->path = $path;
-        $this->last_changed = filemtime($path);
-        $this->last_changed_iso = date(DATE_ISO8601, $this->last_changed);
-        $this->humanize_name();
-    }
-    
-    public function exists() {
-        return file_exists($this->path);
+        if (file_exists($path)) {
+            $this->exists = true;
+            $this->last_changed = filemtime($path);
+            $this->last_changed_iso = date(DATE_ISO8601, $this->last_changed);
+            $this->humanize_name();        
+        } else {
+            $this->exists = false;
+        }
     }
     
     public function humanize_name() {
@@ -58,8 +61,7 @@ class Client extends Folder {
         // concepts can belong to categories, but can also
         // be freestanding
         $this->categories = Category::search($path, $this);
-        $undefined = new Category($this->path, $this);
-        $undefined->machine_name = $undefined->name = "uncategorized";
+        $undefined = Category::from_client($this);
         $this->concepts = Concept::search($path, $undefined);
         $this->sort();
     }
@@ -93,6 +95,14 @@ class Category extends Folder {
         $this->sort();
     }
     
+    // uses the client base path rather than a category folder
+    // to make a category for "leftovers".
+    public static function from_client($client) {
+        $uncategorized = new Category($client->path, $client);
+        $uncategorized->machine_name = $uncategorized->name = "uncategorized";
+        return $uncategorized;
+    }
+    
     public static function search($base, $parent) {
         return search($base, 'Category', $parent);
     }
@@ -100,7 +110,7 @@ class Category extends Folder {
     public static function reverse($request) {
         $client = Client::reverse($request);
         if ($request["category"] == "uncategorized") {
-            return $client; 
+            return Category::from_client($client); 
         } else {
             $category_path = $client->path . "/" . $request["category"]; 
             return new Category($category_path, $client);
@@ -119,6 +129,8 @@ class Category extends Folder {
 
 class Concept extends Folder {
     public static function search($base, $category) {    
+        if (!file_exists($base)) return array();  
+    
         $garbage = array('.', '..', '.DS_Store', 'Thumbs.db');
         $types = array('png','jpeg','jpg','gif');    
 
@@ -134,17 +146,24 @@ class Concept extends Folder {
     }
     
     public static function reverse($request) {   
-        $category = Category::reverse($request);
+        $category = Category::reverse($request);    
         $concept_path = $category->path . "/" . $request["concept"];
+        
         // search for extension
         $concept_path = array_shift(glob($concept_path . "*"));
-        $concept = new Concept($concept_path, $category);
+        $concept = new Concept($concept_path, $category);        
         return $concept;
     }
     
     public function __construct($path, $category) {
         parent::__construct($path);
         $this->category = $category;
+        
+        if ($category->name == "uncategorized") {
+            $this->uncategorized = true;
+        } else {
+            $this->uncategorized = false;
+        }
     }
     
     public function humanize_name () {
@@ -156,7 +175,11 @@ class Concept extends Folder {
     }
     
     public function get_url_path() {
-        return $this->category->get_url_path() . $this->machine_name . "/";
+        if ($this->category->name == "uncategorized") {
+            return $this->category->client->get_url_path() . $this->machine_name . "/";
+        } else {
+            return $this->category->get_url_path() . $this->machine_name . "/";  
+        }
     }
     
     public function get_image_url() {

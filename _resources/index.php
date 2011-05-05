@@ -2,12 +2,16 @@
 
 /* import requirements */
 
-require('../settings.php');
+require('./settings.php');
 require('./request.php');
 require('./utils.php');
 require('./models.php');
 require('./controllers.php');
 require('./vendors/Smarty/libs/Smarty.class.php');
+
+/* setup */
+
+
 
 /* initialization */
 
@@ -32,7 +36,7 @@ if ($license->is_verified()) {
 } else {
     // minimalistic routing to functions 
     // in controllers.php
-    $output = call_user_func($requested_view, $smarty);
+    $output = call_user_func($requested_view, $request, $smarty);
 }
 
 print $output;

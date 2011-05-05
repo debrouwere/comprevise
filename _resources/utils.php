@@ -8,11 +8,21 @@ class Paginator {
         $this->pointer = 0;
     }
     
-    public function current($i = NULL) {
+    public function current($i = NULL, $discriminator = NULL) {
         if ($i === NULL) {
             return $this->list[$this->pointer];
         } else {
-            $this->pointer = $i;
+            if (is_object($i)) {
+                if ($discriminator) {
+                    $concepts = array_map($discriminator, $this->list);
+                    $location = array_search($i->path, $concepts);
+                } else {
+                    $location = array_search($i, $this->list);
+                }
+            } else if (is_integer($i)) {
+                $location = $i;
+            }
+            $this->pointer = $location;
         }
     }
     
