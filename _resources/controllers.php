@@ -42,9 +42,7 @@ function category($request, $tpl) {
 }
 
 function client($request, $tpl) {
-    $clients = Client::search("../clients");
-    $client = $clients[0];
-
+    $client = Client::reverse($request);    
     $tpl->assign("client", $client);
     $tpl->assign("folders", $client->categories);
     $tpl->assign("concepts", $client->concepts);

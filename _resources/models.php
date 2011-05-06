@@ -67,11 +67,16 @@ class Client extends Folder {
     }
     
     public static function search($base) {
-        return search($base, 'Client');
+        $results = search($base, 'Client');
+        function is_visible($client) {
+            return (strpos($client->path, '_resources') === false);
+        }
+
+        return array_filter($results, "is_visible");
     }
     
     public static function reverse($request) {
-        $client_path = "../clients/" . $request["client"];
+        $client_path = "../" . $request["client"];
         $client = new Client($client_path);
         return $client;
     }
@@ -189,6 +194,6 @@ class Concept extends Folder {
             $url_path = $this->category->get_url_path();
         }
     
-        return CR_BASE_URL . "/clients" . $url_path . $this->filename;
+        return CR_BASE_URL . $url_path . $this->filename;
     }
 }
