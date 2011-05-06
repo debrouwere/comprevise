@@ -9,10 +9,6 @@ require('./models.php');
 require('./controllers.php');
 require('./vendors/Smarty/libs/Smarty.class.php');
 
-/* setup */
-
-
-
 /* initialization */
 
 $smarty = new Smarty;

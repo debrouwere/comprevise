@@ -20,6 +20,6 @@ define('CR_DEBUG', true);
 // the subdirectory. For example, if the app is available at 
 // http://yourdomain.com/concepts, specify '/concepts' as the 
 // base url.
-define('CR_BASE_URL', '/concept-revisions');
+define('CR_BASE_URL_OVERRIDE', NULL);
 // One of 'dark', 'dark-serif', 'dark-shiny', 'light', 'light-serif', 'light-shiny'.
 define('CR_THEME', 'light');
