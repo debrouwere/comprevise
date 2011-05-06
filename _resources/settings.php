@@ -5,21 +5,31 @@
  * 
  * This is the only file you should ever have to touch in
  * order to customize Concept Revisions to your liking.
- * 
- * You can change the theme and specify a different base URL
- * if you need it.
  */
+ 
+/* THEME */
+
+// One of 'dark', 'dark-serif', 'dark-shiny', 'light', 'light-serif', 'light-shiny'.
+define('CR_THEME', 'light');
+
+/* PRODUCT REGISTRATION */
 
 // Your product code.
 define('CR_CODE', 'INSERT CODE HERE');
 // Your email address.
 define('CR_EMAIL', 'INSERT EMAIL HERE');
-// You can turn debugging to troubleshoot the app
-define('CR_DEBUG', true);
-// If Concept Revisions doesn't live at the domain root, add in 
-// the subdirectory. For example, if the app is available at 
+
+/* TECHNICAL STUFF */
+
+// You can turn debugging to troubleshoot the app.
+// This should be false when Concept Revisions is
+// used in a production environment.
+define('CR_DEBUG', false);
+// If Concept Revisions doesn't live at the domain root, and
+// clean urls are giving you grief, add in the subdirectory. 
+// For example, if the app is available at 
 // http://yourdomain.com/concepts, specify '/concepts' as the 
 // base url.
+// Most servers and hosts won't need this, so leave it blank
+// unless you know what you're doing.
 define('CR_BASE_URL_OVERRIDE', NULL);
-// One of 'dark', 'dark-serif', 'dark-shiny', 'light', 'light-serif', 'light-shiny'.
-define('CR_THEME', 'light');
