@@ -11,6 +11,9 @@
 
 // One of 'dark', 'dark-serif', 'dark-shiny', 'light', 'light-serif', 'light-shiny'.
 define('CR_THEME', 'light');
+// Sort concepts revisions either by last modified date (last_changed) or 
+// alphabetically (alphabetical).
+define('CR_SORT_ORDER', 'alphabetical');
 
 /* PRODUCT REGISTRATION */
 

@@ -49,9 +49,31 @@ class Folder {
         }
     }
 
+    // depending on how the application is configured, 
+    // we either sort files/folders alphabetically or 
+    // by when they were last changed
     public static function cmp($a, $b) {
-        return $a->last_changed < $b->last_changed;
+        if (CR_SORT_ORDER == 'alphabetical') {
+            $list = array($a, $b);
+            natcasesort($list);
+            if ($a === $list[0]) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return $a->last_changed < $b->last_changed;
+        }
     }
+    
+    public function __toString() {
+        return $this->machine_name;
+    }
+}
+
+
+function is_visible($client) {
+    return (strpos($client->path, '_resources') === false);
 }
 
 
@@ -68,10 +90,6 @@ class Client extends Folder {
     
     public static function search($base) {
         $results = search($base, 'Client');
-        function is_visible($client) {
-            return (strpos($client->path, '_resources') === false);
-        }
-
         return array_filter($results, "is_visible");
     }
     
@@ -92,6 +110,15 @@ class Client extends Folder {
 }
 
 
+// categories have underlying concept folders
+function is_category($category) {
+    foreach (scandir($category->path) as $file) {
+        if (substr($file, 0, 1) != '.' && is_dir($category->path . "/" . $file)) return true;
+    }
+    return false;
+}
+
+
 class Category extends Folder {
     public function __construct($path, $client) {   
         parent::__construct($path);
@@ -109,7 +136,9 @@ class Category extends Folder {
     }
     
     public static function search($base, $parent) {
-        return search($base, 'Category', $parent);
+        $results = search($base, 'Category', $parent);
+        return array_filter($results, "is_category");       
+        
     }
 
     public static function reverse($request) {
@@ -132,7 +161,54 @@ class Category extends Folder {
 }
 
 
+// concepts don't have underlying folders
+function is_concept($concept) {
+    foreach (scandir($concept->path) as $file) {
+        if (substr($file, 0, 1) != '.' && is_dir($concept->path . "/" . $file)) return false;
+    }
+    return true;
+}
+
+
 class Concept extends Folder {
+    public static function search($base, $parent) {
+        $results = search($base, 'Concept', $parent);
+        return array_filter($results, "is_concept");
+    }
+
+    public static function reverse($request) {   
+        $category = Category::reverse($request);    
+        $concept_path = $category->path . "/" . $request["concept"];
+        $concept = new Concept($concept_path, $category);        
+        return $concept;
+    }
+
+    public function __construct($path, $category) {
+        parent::__construct($path);
+        $this->category = $category;
+        $this->revisions = Revision::search($path, $this);
+        
+        if ($category->name == "uncategorized") {
+            $this->uncategorized = true;
+        } else {
+            $this->uncategorized = false;
+        }
+    }
+
+    public function sort() {
+        usort($this->revisions, array('Folder', 'cmp'));
+    }
+
+    public function get_url_path() {
+        if ($this->category->name == "uncategorized") {
+            return $this->category->client->get_url_path() . $this->machine_name . "/";
+        } else {
+            return $this->category->get_url_path() . $this->machine_name . "/";  
+        }
+    }
+}
+
+class Revision extends Folder {
     public static function search($base, $category) {    
         if (!file_exists($base)) return array();  
     
@@ -144,27 +220,27 @@ class Concept extends Folder {
         foreach ($files as $file) {
             $filetype = array_pop(explode('.', $file));
             if (!in_array($file, $garbage) and in_array($filetype, $types)) {
-                array_push($images, new Concept($base . "/" . $file, $category));
+                array_push($images, new Revision($base . "/" . $file, $category));
             }
         }
         return $images;
     }
     
     public static function reverse($request) {   
-        $category = Category::reverse($request);    
-        $concept_path = $category->path . "/" . $request["concept"];
+        $concept = Concept::reverse($request);    
+        $revision_path = $concept->path . "/" . $request["revision"];
         
         // search for extension
-        $concept_path = array_shift(glob($concept_path . "*"));
-        $concept = new Concept($concept_path, $category);        
-        return $concept;
+        $revision_path = array_shift(glob($revision_path . "*"));
+        $revision = new Revision($revision_path, $concept);        
+        return $revision;
     }
     
-    public function __construct($path, $category) {
+    public function __construct($path, $concept) {
         parent::__construct($path);
-        $this->category = $category;
+        $this->concept = $concept;
         
-        if ($category->name == "uncategorized") {
+        if ($concept->category->name == "uncategorized") {
             $this->uncategorized = true;
         } else {
             $this->uncategorized = false;
@@ -180,20 +256,10 @@ class Concept extends Folder {
     }
     
     public function get_url_path() {
-        if ($this->category->name == "uncategorized") {
-            return $this->category->client->get_url_path() . $this->machine_name . "/";
-        } else {
-            return $this->category->get_url_path() . $this->machine_name . "/";  
-        }
+        return $this->concept->get_url_path() . $this->machine_name . "/";
     }
     
     public function get_image_url() {
-        if ($this->category->name == "uncategorized") {
-            $url_path = $this->category->client->get_url_path();
-        } else {
-            $url_path = $this->category->get_url_path();
-        }
-    
-        return CR_BASE_URL . $url_path . $this->filename;
+        return CR_BASE_URL . $this->concept->get_url_path() . $this->filename;
     }
 }

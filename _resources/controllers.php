@@ -4,21 +4,22 @@ function get_concept_path($concept) {
     return $concept->path;
 }
 
-function concept($request, $tpl) {
-    $current = Concept::reverse($request);
+function revision($request, $tpl) {
+    $current = Revision::reverse($request);
     
-    if (get_class($current->category) == "Category") {
-        $concepts = new Paginator($current->category->concepts);
+    if (get_class($current->concept->category) == "Category") {
+        // this won't work
+        $revisions = new Paginator($current->concept->category->concepts);
     } else {
-        $concepts = new Paginator(array($current));
+        $revisions = new Paginator(array($current));
     }
 
     // initialize paginator, setting the paginator to the
     // current object using its path as a guide
-    $concepts->current($current, "get_concept_path");
+    $revisions->current($current, "get_concept_path");
 
-    $tpl->assign("concepts", $concepts);
-    return $tpl->fetch('./templates/concept.tpl');
+    $tpl->assign("revisions", $revisions);
+    return $tpl->fetch('./templates/revision.tpl');
 }
 
 function category($request, $tpl) {
@@ -46,6 +47,9 @@ function client($request, $tpl) {
     $tpl->assign("client", $client);
     $tpl->assign("folders", $client->categories);
     $tpl->assign("concepts", $client->concepts);
+    
+    print_r($client);
+    
     return $tpl->fetch('./templates/client.tpl');
 }
 

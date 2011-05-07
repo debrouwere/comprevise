@@ -7,7 +7,7 @@
     
     {foreach $folders as $folder}        
         <h3{if $folder@first} class="first"{/if}>
-            <a href="{$folder->concepts[0]->get_absolute_url()}">
+            <a href="{$folder->concepts[0]->revisions[0]->get_absolute_url()}">
                 <em>{$folder->name}</em>
                 last updated <time datetime="{$folder->last_changed_iso}">{$folder->last_changed_iso}</time>
             </a>

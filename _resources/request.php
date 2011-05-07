@@ -17,7 +17,7 @@ if (!defined('CR_BASE_URL_OVERRIDE') || CR_BASE_URL_OVERRIDE === NULL) {
 }
 
 $request = array();
-$pieces = array("client", "category", "concept");
+$pieces = array("client", "category", "concept", "revision");
 foreach (explode("/", $path) as $value) {
     if (empty($value)) continue;
     // trim serves as a basic security measure to avoid
