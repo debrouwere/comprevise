@@ -5,25 +5,25 @@
     <h1>Concepts for {$client->name}</h1>
     <p class="description">This dashboard will automatically update as new concepts and revisions are uploaded.</p>
     
-    {foreach $folders as $folder}        
-        <h3{if $folder@first} class="first"{/if}>
-            <a href="{$folder->concepts[0]->revisions[0]->get_absolute_url()}">
-                <em>{$folder->name}</em>
-                last updated <time datetime="{$folder->last_changed_iso}">{$folder->last_changed_iso}</time>
+    {foreach $concepts as $concept}        
+        <h3{if $concept@first} class="first"{/if}>
+            <a href="{$concept->revisions[0]->get_absolute_url()}">
+                <em>{$concept->name}</em>
+                last updated <time datetime="{$concept->last_changed_iso}">{$concept->last_changed_iso}</time>
             </a>
         </h3>
         <ul>
-            {foreach $folder->concepts as $concept}
-                <li><a href="{$concept->get_absolute_url()}">{$concept->name}</a></li>
+            {foreach $concept->revisions as $revision}
+                <li><a href="{$revision->get_absolute_url()}">{$revision->name}</a></li>
             {/foreach}
         </ul>
     {/foreach}
 
-    {foreach $concepts as $concept}
+    {foreach $categories as $category}
         <h3>
-            <a href="{$concept->get_absolute_url()}">
-                <em>{$concept->name}</em>
-                last updated <time datetime="{$concept->last_changed_iso}">{$concept->last_changed_iso}</time>
+            <a href="{$category->get_absolute_url()}">
+                <em>{$category->name}</em>
+                last updated <time datetime="{$concept->last_changed_iso}">{$category->last_changed_iso}</time>
             </a>
         </h3>
     {/foreach}

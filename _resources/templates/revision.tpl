@@ -15,10 +15,10 @@
        <a {if $revisions->prev()}href="{$revisions->prev()->get_absolute_url()}"{/if}>&larr; Previous Concept</a>
     </li>
     <li>
-        {if $revisions->current()->category->name == "uncategorized"}
-        <a href="{$revisions->current()->category->client->get_absolute_url()}">Back to Project Dashboard</a>
+        {if $revisions->current()->concept->category->name == "uncategorized"}
+        <a href="{$revisions->current()->concept->category->client->get_absolute_url()}">Back to Project Dashboard</a>
         {else}
-        <a href="{$revisions->current()->category->get_absolute_url()}">Back to {$revisions->current()->category->name} overview</a>
+        <a href="{$revisions->current()->concept->category->get_absolute_url()}">Back to {$revisions->current()->concept->category->name} overview</a>
         {/if}
     </li>
     <li{if $revisions->is_last()} class="disabled"{/if}>

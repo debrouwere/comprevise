@@ -54,15 +54,15 @@ class Folder {
     // by when they were last changed
     public static function cmp($a, $b) {
         if (CR_SORT_ORDER == 'alphabetical') {
-            $list = array($a, $b);
+            $list = array($a->machine_name, $b->machine_name);
             natcasesort($list);
-            if ($a === $list[0]) {
-                return true;
-            } else {
+            if ($a->machine_name == array_shift($list)) {
                 return false;
+            } else {
+                return true;
             }
         } else {
-            return $a->last_changed < $b->last_changed;
+            return $a->last_changed > $b->last_changed;
         }
     }
     
@@ -187,7 +187,8 @@ class Concept extends Folder {
         parent::__construct($path);
         $this->category = $category;
         $this->revisions = Revision::search($path, $this);
-        
+        $this->sort();
+                
         if ($category->name == "uncategorized") {
             $this->uncategorized = true;
         } else {
