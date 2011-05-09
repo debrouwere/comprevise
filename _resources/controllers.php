@@ -34,8 +34,19 @@ function concept($request, $tpl) {
 
 function category($request, $tpl) {
     $category = Category::reverse($request);
-    redirect($category->get_latest_concept()->get_latest_revision()->get_absolute_url());
-    return '';
+    if ($category->machine_name == "uncategorized") {
+        $params = array(
+            "client" => $request["client"], 
+            "category" => "uncategorized",
+            "concept" => $request["category"],
+            );
+        return concept($params, $tpl);      
+    } else {
+        $tpl->assign("category", $category);    
+        $tpl->assign("client", $category->client);
+        $tpl->assign("concepts", $category->concepts);
+        return $tpl->fetch('./templates/category.tpl');    
+    }
 }
 
 function client($request, $tpl) {
