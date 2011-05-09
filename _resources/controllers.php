@@ -17,23 +17,25 @@ function revision($request, $tpl) {
 }
 
 function concept($request, $tpl) {
-    // redirect this uncategorized concept revision
-    // to the correct controller
-    $params = array(
-        "client" => $request["client"], 
-        "category" => "uncategorized",
-        "concept" => $request["category"],
-        "revision" => $request["concept"]
-        );
-    return revision($params, $tpl);
+    $concept = Concept::reverse($request);
+    if ($concept->exists) {
+        redirect($concept->get_latest_revision()->get_absolute_url());
+        return '';
+    } else {
+        $params = array(
+            "client" => $request["client"], 
+            "category" => "uncategorized",
+            "concept" => $request["category"],
+            "revision" => $request["concept"]
+            );
+        return revision($params, $tpl);    
+    }
 }
 
 function category($request, $tpl) {
-    $category = Category::reverse($request);    
-    $tpl->assign("category", $category);    
-    $tpl->assign("client", $category->client);
-    $tpl->assign("concepts", $category->concepts);
-    return $tpl->fetch('./templates/category.tpl');
+    $category = Category::reverse($request);
+    redirect($category->get_latest_concept()->get_latest_revision()->get_absolute_url());
+    return '';
 }
 
 function client($request, $tpl) {
@@ -47,4 +49,8 @@ function client($request, $tpl) {
 
 function license($request, $tpl) {
     return $tpl->fetch('./templates/license.tpl');
+}
+
+function not_found($request, $tpl) {
+    return "Not Found";
 }

@@ -1,6 +1,16 @@
 <?php
 
-$path = $_GET['q'];
+$path = $_SERVER['PATH_INFO'];
+
+function redirect($url) {
+    header('Status: 303');
+    header('Location: ' . $url);
+}
+
+// add trailing slash to url if necessary
+if ($path[strlen($path)-1] != '/') {
+    redirect($_SERVER['REQUEST_URI'] . '/');
+}
 
 if (strpos($_SERVER['REQUEST_URI'], 'index.php') || strpos($_SERVER['REQUEST_URI'], '?q=')) {
     $clean_urls = false;

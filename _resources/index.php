@@ -32,7 +32,12 @@ if ($license->is_verified()) {
 } else {
     // minimalistic routing to functions 
     // in controllers.php
-    $output = call_user_func($requested_view, $request, $smarty);
+    if (function_exists($requested_view)) {
+        $output = call_user_func($requested_view, $request, $smarty);
+    } else {
+        header("HTTP/1.0 404 Not Found");
+        $output = not_found($request, $smarty);
+    }
 }
 
 print $output;

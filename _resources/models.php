@@ -147,12 +147,22 @@ class Category extends Folder {
             return Category::from_client($client); 
         } else {
             $category_path = $client->path . "/" . $request["category"]; 
-            return new Category($category_path, $client);
+            $category = new Category($category_path, $client);
+            if (is_category($category)) {
+                return $category;
+            } else {
+                return Category::from_client($client);
+            }
         }    
     }
 
     public function sort() {
         usort($this->concepts, array('Folder', 'cmp'));
+    }
+    
+    public function get_latest_concept() {
+        $concepts = $this->concepts;
+        return array_pop($concepts);
     }
     
     public function get_url_path() {
@@ -179,8 +189,7 @@ class Concept extends Folder {
     public static function reverse($request) {   
         $category = Category::reverse($request);    
         $concept_path = $category->path . "/" . $request["concept"];
-        $concept = new Concept($concept_path, $category);        
-        return $concept;
+        return new Concept($concept_path, $category);        
     }
 
     public function __construct($path, $category) {
@@ -198,6 +207,11 @@ class Concept extends Folder {
 
     public function sort() {
         usort($this->revisions, array('Folder', 'cmp'));
+    }
+    
+    public function get_latest_revision() {
+        $revisions = $this->revisions;
+        return array_pop($revisions);
     }
 
     public function get_url_path() {
