@@ -14,6 +14,12 @@ define('CR_THEME', 'light');
 // Sort concepts revisions either by last modified date (last_changed) or 
 // alphabetically (alphabetical).
 define('CR_SORT_ORDER', 'alphabetical');
+// Automatically show or hide the navigational menu based on your cursor, 
+// either 'yes' or 'no'.
+define('CR_ANIMATE', 'yes');
+// Position the navigational menu either at the top of your browser, or 
+// at the bottom. Specify 'no' to disable the menu.
+define('CR_NAV_POSITION', 'bottom');
 
 /* PRODUCT REGISTRATION */
 

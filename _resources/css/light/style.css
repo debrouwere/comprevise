@@ -234,10 +234,3 @@ filter: alpha(opacity=20);
 opacity:0.2;
 top:0;
 }
-
-/* REMOVE THE 'X' BEFORE 'display' AND 'top' TO REMOVE THE NAVIGATION BAR ABOVE CONCEPTS */
-
-ul#header-bar{
-Xdisplay: none;}
-#concept{
-Xtop:0;}

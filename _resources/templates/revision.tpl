@@ -7,6 +7,7 @@
 #concept { 
     background: url('{$revisions->current()->get_image_url()}') center top no-repeat;
 }
+</style>
 {/block}
 
 {block "main"}

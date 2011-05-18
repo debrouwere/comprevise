@@ -14,6 +14,8 @@ require('./vendors/Smarty/libs/Smarty.class.php');
 $smarty = new Smarty;
 $smarty->assign("BASE_URL", CR_BASE_URL);
 $smarty->assign("THEME", CR_THEME);
+$smarty->assign("ANIMATE", CR_ANIMATE);
+$smarty->assign("NAV_POSITION", CR_NAV_POSITION);
 $license = new License(CR_CODE, CR_EMAIL);
 
 /* set debug mode */
