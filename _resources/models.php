@@ -112,6 +112,8 @@ class Client extends Folder {
 
 // categories have underlying concept folders
 function is_category($category) {
+    if (!file_exists($category->path)) return false;
+    
     foreach (scandir($category->path) as $file) {
         if (substr($file, 0, 1) != '.' && is_dir($category->path . "/" . $file)) return true;
     }
@@ -173,6 +175,8 @@ class Category extends Folder {
 
 // concepts don't have underlying folders
 function is_concept($concept) {
+    if (!file_exists($concept->path)) return false;
+
     foreach (scandir($concept->path) as $file) {
         if (substr($file, 0, 1) != '.' && is_dir($concept->path . "/" . $file)) return false;
     }
@@ -230,6 +234,7 @@ class Revision extends Folder {
         $garbage = array('.', '..', '.DS_Store', 'Thumbs.db');
         $types = array('png','jpeg','jpg','gif');    
 
+        if (!file_exists($base)) return array();
         $files = scandir($base);
         $images = array();
         foreach ($files as $file) {
