@@ -13,13 +13,17 @@ $.fn.appear = function (appear) {
     }
 }
 
+function calculate_nearness_to_menu (e) {
+    if (NAV_POSITION == 'bottom') {
+        return header_pos - e.pageY;
+    } else {
+        return e.pageY - $("body").scrollTop();
+    }
+}
+
 function fade_header () {
     $(document).bind('mousemove', function(e){
-        if (NAV_POSITION == 'bottom') {
-            var nearness = header_pos - e.pageY;
-        } else {
-            var nearness = e.pageY - $("body").scrollTop();
-        }
+        var nearness = calculate_nearness_to_menu(e);
         
         if (nearness <= 100) {
             $("#header-bar").appear();

@@ -251,7 +251,10 @@ class Revision extends Folder {
         $revision_path = $concept->path . "/" . $request["revision"];
         
         // search for extension
-        $revision_path = array_shift(glob($revision_path . "*"));
+        $matches = glob($revision_path . "*");
+        if ($matches) {
+            $revision_path = array_shift($matches);
+        }
         $revision = new Revision($revision_path, $concept);        
         return $revision;
     }
