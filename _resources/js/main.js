@@ -30,12 +30,14 @@ function fade_header () {
 }
 
 $(document).ready(function(){
-    $("#header-bar").fadeTo(0, 0.8);
-    header_pos = $("#header-bar").offset().top;
-    $(window).resize(function(){
-        $("#header-bar").appear();
+    if ($("#header-bar").length) {
+        $("#header-bar").fadeTo(0, 0.8);
         header_pos = $("#header-bar").offset().top;
-    });
+        $(window).resize(function(){
+            $("#header-bar").appear();
+            header_pos = $("#header-bar").offset().top;
+        });
+    }
 
     $("time").timeago();
     
