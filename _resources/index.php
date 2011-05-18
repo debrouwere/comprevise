@@ -9,6 +9,13 @@ require('./models.php');
 require('./controllers.php');
 require('./vendors/Smarty/libs/Smarty.class.php');
 
+/* product registration */
+
+// Your product code.
+define('CR_CODE', 'INSERT CODE HERE');
+// Your email address.
+define('CR_EMAIL', 'INSERT EMAIL HERE');
+
 /* initialization */
 
 $smarty = new Smarty;
@@ -37,8 +44,12 @@ if ($license->is_verified()) {
     if (function_exists($requested_view)) {
         $output = call_user_func($requested_view, $request, $smarty);
     } else {
-        header("HTTP/1.0 404 Not Found");
-        $output = not_found($request, $smarty);
+        if (empty($request)) {
+            // directory listings are forbidden
+            $output = forbidden($request, $smarty);
+        } else {
+            $output = not_found($request, $smarty);
+        }
     }
 }
 

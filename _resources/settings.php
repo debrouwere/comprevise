@@ -21,13 +21,6 @@ define('CR_ANIMATE', 'yes');
 // at the bottom. Specify 'no' to disable the menu.
 define('CR_NAV_POSITION', 'bottom');
 
-/* PRODUCT REGISTRATION */
-
-// Your product code.
-define('CR_CODE', 'INSERT CODE HERE');
-// Your email address.
-define('CR_EMAIL', 'INSERT EMAIL HERE');
-
 /* TECHNICAL STUFF */
 
 // You can turn debugging to troubleshoot the app.

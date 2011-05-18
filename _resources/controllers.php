@@ -1,11 +1,27 @@
 <?php
 
+/* UTILS */
+
 function get_revision_path($revision) {
     return $revision->path;
 }
 
+/* CONTROLLERS */
+
+function not_found($request, $tpl) {
+    header("HTTP/1.0 404 Not Found");
+    return $tpl->fetch('./templates/404.tpl');
+}
+
+function forbidden($request, $tpl) {
+    header("HTTP/1.0 403 Forbidden");
+    return $tpl->fetch('./templates/403.tpl');
+}
+
 function revision($request, $tpl) {
     $current = Revision::reverse($request);
+    if (!$current->exists) return not_found($request, $tpl);
+    
     $revisions = new Paginator($current->concept->revisions);
 
     // initialize paginator, setting the paginator to the
@@ -18,6 +34,7 @@ function revision($request, $tpl) {
 
 function concept($request, $tpl) {
     $concept = Concept::reverse($request);
+
     if ($concept->exists) {
         redirect($concept->get_latest_revision()->get_absolute_url());
         return '';
@@ -34,6 +51,8 @@ function concept($request, $tpl) {
 
 function category($request, $tpl) {
     $category = Category::reverse($request);
+    if (!$category->exists) return not_found($request, $tpl);
+
     if ($category->machine_name == "uncategorized") {
         $params = array(
             "client" => $request["client"], 
@@ -50,7 +69,9 @@ function category($request, $tpl) {
 }
 
 function client($request, $tpl) {
-    $client = Client::reverse($request);    
+    $client = Client::reverse($request);   
+    if (!$client->exists) return not_found($request, $tpl);
+     
     $tpl->assign("client", $client);
     $tpl->assign("categories", $client->categories);
     $tpl->assign("concepts", $client->concepts);
@@ -60,8 +81,4 @@ function client($request, $tpl) {
 
 function license($request, $tpl) {
     return $tpl->fetch('./templates/license.tpl');
-}
-
-function not_found($request, $tpl) {
-    return "Not Found";
 }
