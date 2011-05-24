@@ -17,7 +17,7 @@
     {/foreach}
     
     <div id="footer">
-        Powered by <a href="http://www.conceptrevisions.com">Concept Revisions</a>
+        Powered by <a href="http://www.comprevise.com">Concept Revisions</a>
     </div>
 </div>
 {/block}
