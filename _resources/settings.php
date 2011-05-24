@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Hi there! Thanks for buying Concept Revisions.
+ * Hi there! Thanks for buying Comprevise.
  * 
  * This is the only file you should ever have to touch in
- * order to customize Concept Revisions to your liking.
+ * order to customize Comprevise to your liking.
  */
  
 /* THEME */
@@ -24,10 +24,10 @@ define('CR_NAV_POSITION', 'bottom');
 /* TECHNICAL STUFF */
 
 // You can turn debugging to troubleshoot the app.
-// This should be false when Concept Revisions is
+// This should be false when Comprevise is
 // used in a production environment.
 define('CR_DEBUG', false);
-// If Concept Revisions doesn't live at the domain root, and
+// If Comprevise doesn't live at the domain root, and
 // clean urls are giving you grief, add in the subdirectory. 
 // For example, if the app is available at 
 // http://yourdomain.com/concepts, specify '/concepts' as the 

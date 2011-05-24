@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{block "title"}Concept Revisions{/block}</title>
+        <title>{block "title"}Comprevise{/block}</title>
         <meta content="charset" value="utf-8" />
         <link rel="stylesheet" type="text/css" href="{$BASE_URL}/_resources/css/{$THEME}/style.css">
         <link rel="stylesheet" type="text/css" media="print" href="{$BASE_URL}/_resources/css/print.css" />   
