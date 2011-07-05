@@ -9,21 +9,14 @@ require('./models.php');
 require('./controllers.php');
 require('./vendors/Smarty/libs/Smarty.class.php');
 
-/* product registration */
-
-// Your product code.
-define('CR_CODE', 'INSERT CODE HERE');
-// Your email address.
-define('CR_EMAIL', 'INSERT EMAIL HERE');
-
 /* initialization */
 
 $smarty = new Smarty;
-$smarty->assign("BASE_URL", CR_BASE_URL);
-$smarty->assign("THEME", CR_THEME);
-$smarty->assign("ANIMATE", CR_ANIMATE);
-$smarty->assign("NAV_POSITION", CR_NAV_POSITION);
-$license = new License(CR_CODE, CR_EMAIL);
+$smarty->assign("BASE_URL", setting('BASE_URL'));
+$smarty->assign("THEME", setting('THEME'));
+$smarty->assign("ANIMATE", setting('ANIMATE'));
+$smarty->assign("NAV_POSITION", setting('NAV_POSITION'));
+$smarty->assign("ALIGNMENT", setting('ALIGNMENT'));
 
 /* set debug mode */
 
@@ -35,21 +28,20 @@ if (CR_DEBUG) {
 
 /* routing */
 
-// if (!$license->is_verified()) { // reverse verification for testing
-if ($license->is_verified()) {
-    $output = license($smarty);
-} else {
-    // minimalistic routing to functions 
-    // in controllers.php
-    if (function_exists($requested_view)) {
+// minimalistic routing to functions 
+// in controllers.php
+if (function_exists($requested_view)) {
+    if ((setting('PASSWORD') == false) or is_authenticated($request, $smarty)) {
         $output = call_user_func($requested_view, $request, $smarty);
     } else {
-        if (empty($request)) {
-            // directory listings are forbidden
-            $output = forbidden($request, $smarty);
-        } else {
-            $output = not_found($request, $smarty);
-        }
+        authenticate($request, $smarty);
+    }
+} else {
+    if (empty($request)) {
+        // directory listings are forbidden
+        $output = forbidden($request, $smarty);
+    } else {
+        $output = not_found($request, $smarty);
     }
 }
 

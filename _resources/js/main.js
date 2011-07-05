@@ -35,7 +35,7 @@ function fade_header () {
 
 $(document).ready(function(){
     if ($("#header-bar").length) {
-        $("#header-bar").fadeTo(0, 0.8);
+        $("#header-bar").fadeTo(0, 0.85);
         header_pos = $("#header-bar").offset().top;
         $(window).resize(function(){
             $("#header-bar").appear();

@@ -5,13 +5,15 @@
     <h1>Concepts for {$client->name}</h1>
     <p class="description">This dashboard will automatically update as new concepts and revisions are uploaded.</p>
     
-    {foreach $concepts as $concept}        
+    {foreach $concepts as $concept}
+        {$first = $concept@first}        
         {include 'concept.partial.tpl'}
     {/foreach}
 
     {foreach $categories as $category}
         <h2>{$category->name}</h2>
         {foreach $category->concepts as $concept}
+            {$first = $concept@first}
             {include 'concept.partial.tpl'}        
         {/foreach}
     {/foreach}

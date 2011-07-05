@@ -58,23 +58,3 @@ class Paginator {
         }
     }
 }
-
-
-class License {
-    public function __construct($code, $email) {
-        $this->code = $code;
-        $this->email = $email;
-        $this->domain = str_replace('www.', '', $_SERVER['SERVER_NAME']);
-    }
-    
-    public function is_verified() {
-        $salt = substr($this->email, 0, 4) . 'w3qwe' . substr($this->domain, -4);
-        $code = sha1($this->email . $salt . $this->domain);
-        
-        if (CR_CODE == $code) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}

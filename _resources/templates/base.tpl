@@ -3,7 +3,7 @@
     <head>
         <title>{block "title"}Comprevise{/block}</title>
         <meta content="charset" value="utf-8" />
-        <link rel="stylesheet" type="text/css" href="{$BASE_URL}/_resources/css/{$THEME}/style.css">
+        <link rel="stylesheet" type="text/css" href="{$BASE_URL}/_resources/css/{$THEME}.css">
         <link rel="stylesheet" type="text/css" media="print" href="{$BASE_URL}/_resources/css/print.css" />   
         <style>
         {if $NAV_POSITION == 'no'}
@@ -34,7 +34,7 @@
         {block "head"}
         {/block}
     </head>
-    <body class="{$NAV_POSITION}">
+    <body class="{$NAV_POSITION} {$ALIGNMENT}-aligned">
         {block "main"}
         <p>This is an empty page.</p>
         {/block}
