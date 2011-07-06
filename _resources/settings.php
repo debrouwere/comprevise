@@ -7,7 +7,7 @@
  * order to customize Comprevise to your liking.
  */
 
-$config = parse_ini_file('../settings.ini', true);
+$config = parse_ini_file('../_settings.ini', true);
  
 /* THEME */
 
