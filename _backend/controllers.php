@@ -10,18 +10,18 @@ function get_revision_path($revision) {
 
 function not_found($request, $tpl) {
     header("HTTP/1.0 404 Not Found");
-    return $tpl->fetch('templates/404.tpl');
+    return $tpl->fetch('404.tpl');
 }
 
 function forbidden($request, $tpl) {
     header("HTTP/1.0 403 Forbidden");
-    return $tpl->fetch('templates/403.tpl');
+    return $tpl->fetch('403.tpl');
 }
 
 function authenticate($request, $tpl) {
     header('WWW-Authenticate: Basic realm="Comprevise"');
     header('HTTP/1.0 401 Unauthorized');
-    print $tpl->fetch('templates/403.tpl');
+    print $tpl->fetch('403.tpl');
     exit;
 }
 
@@ -52,7 +52,7 @@ function revision($request, $tpl) {
     $revisions->current($current, "get_revision_path");
 
     $tpl->assign("revisions", $revisions);
-    return $tpl->fetch('templates/revision.tpl');
+    return $tpl->fetch('revision.tpl');
 }
 
 function concept($request, $tpl) {
@@ -87,7 +87,7 @@ function category($request, $tpl) {
         $tpl->assign("category", $category);    
         $tpl->assign("client", $category->client);
         $tpl->assign("concepts", $category->concepts);
-        return $tpl->fetch('templates/category.tpl');    
+        return $tpl->fetch('category.tpl');    
     }
 }
 
@@ -99,9 +99,9 @@ function client($request, $tpl) {
     $tpl->assign("categories", $client->categories);
     $tpl->assign("concepts", $client->concepts);
     
-    return $tpl->fetch('templates/client.tpl');
+    return $tpl->fetch('client.tpl');
 }
 
 function license($request, $tpl) {
-    return $tpl->fetch('templates/license.tpl');
+    return $tpl->fetch('license.tpl');
 }

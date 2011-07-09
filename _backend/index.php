@@ -12,6 +12,7 @@ require('./vendors/Smarty/libs/Smarty.class.php');
 /* initialization */
 
 $smarty = new Smarty;
+$smarty->template_dir = '../_themes/templates';
 $smarty->assign("BASE_URL", setting('BASE_URL'));
 $smarty->assign("THEME", setting('THEME'));
 $smarty->assign("ANIMATE", setting('ANIMATE'));

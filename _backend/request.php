@@ -20,7 +20,7 @@ if (strpos($_SERVER['REQUEST_URI'], 'index.php') || strpos($_SERVER['REQUEST_URI
 
 // try to autodetect the base url
 if (!defined('CR_BASE_URL_OVERRIDE') || CR_BASE_URL_OVERRIDE == false) {
-    $base = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['PHP_SELF'], '/_resources/'));
+    $base = substr($_SERVER['REQUEST_URI'], 0, strpos($_SERVER['PHP_SELF'], '/_backend/'));
     define('CR_BASE_URL', $base);
 } else {
     define('CR_BASE_URL', '');

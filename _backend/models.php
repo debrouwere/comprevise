@@ -73,7 +73,7 @@ class Folder {
 
 
 function is_visible($client) {
-    return (strpos($client->path, '_resources') === false);
+    return (strpos($client->path, '_backend') === false && strpos($client->path, '_themes') === false);
 }
 
 

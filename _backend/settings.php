@@ -3,8 +3,10 @@
 /*
  * Hi there! Thanks for buying Comprevise.
  * 
- * This is the only file you should ever have to touch in
- * order to customize Comprevise to your liking.
+ * If you're looking for a way to configure the app, 
+ * _settings.ini in the main directory is what you're 
+ * looking for. This file is just plumbing, and best 
+ * left as-is.
  */
 
 $config = parse_ini_file('../_settings.ini', true);
