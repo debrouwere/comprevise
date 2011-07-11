@@ -168,7 +168,7 @@ class Category extends Folder {
     }
     
     public function get_url_path() {
-        return $this->client->get_url_path() . $this->name . "/";
+        return $this->client->get_url_path() . $this->machine_name . "/";
     }
 }
 
